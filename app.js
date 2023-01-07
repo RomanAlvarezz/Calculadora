@@ -3,7 +3,7 @@ const d = document,
  $prevDisplay = d.querySelector('.previous-operand'),
  $buttons = d.querySelectorAll('button');
 
-let calculation = ['0'];
+let calculation = [];
 let acummulativeCalculation;
 
  function calculate(button){
@@ -16,12 +16,15 @@ let acummulativeCalculation;
         $prevDisplay.textContent = '';
     } else if (value == '='){
         $prevDisplay.textContent = '';
-        $currentDisplay.textContent = eval(acummulativeCalculation);
+        let result = eval(acummulativeCalculation);
+        let resultStr = result.toString();
+        if (resultStr.match(/./ig)) result = result.toFixed(2)
+        $currentDisplay.textContent = result;
         calculation = [$currentDisplay.textContent];
     } else if ( value == 'DEL'){
         calculation.pop();
         acummulativeCalculation = calculation.join('');
-        $currentDisplay.textContent = '';
+        $currentDisplay.textContent = acummulativeCalculation;
     } else if (value == '+' ||
                value == '-' ||
                value == '*' ||
@@ -75,4 +78,13 @@ let acummulativeCalculation;
  }
 
  $buttons.forEach(button => button.addEventListener('click', () => calculate(button)))
+
+
+
+let result = eval('2+2.7198758');
+let resultStr = result.toString();
+console.log(resultStr.match(/./ig))
+if (resultStr.match(/./ig)){
+    result = result.toFixed(2)
+}
 

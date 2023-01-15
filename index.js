@@ -1,8 +1,30 @@
-const d = document,
- $currentDisplay = d.querySelector('.current-operand'),
- $prevDisplay = d.querySelector('.previous-operand'),
- $buttons = d.querySelectorAll('button');
+import { Calculadora } from "./Calculadora.js";
+import { Display } from "./Display.js";
 
+const d = document,
+ $valorActual = d.querySelector('.current-operand'),
+ $valorPrevio = d.querySelector('.previous-operand'),
+ $btnNumeros = d.querySelectorAll('[data-number]'),
+ $btnOperadores = d.querySelectorAll('[data-operator]'),
+ $btnBorrar = d.querySelector('.delete'),
+ $btnBorrarTodo = d.querySelector('.clear');
+
+const display = new Display($valorPrevio, $valorActual);
+
+$btnBorrar.addEventListener('click', ()=> display.borrar())
+
+$btnBorrarTodo.addEventListener('click', () => display.borrarTodo())
+
+$btnNumeros.forEach($btn => {
+    $btn.addEventListener('click', () => display.agregarNumero($btn.innerHTML))
+})
+ 
+$btnOperadores.forEach( $operador => $operador.addEventListener('click', ()=> {
+    display.computar($operador.getAttribute('data-operator'))
+}))
+
+/* 
+//Codigo Antiguo
 let calculation = [];
 let acummulativeCalculation;
 
@@ -75,16 +97,6 @@ let acummulativeCalculation;
 
     console.log(calculation);
     console.log(acummulativeCalculation);
- }
+ } */
 
- $buttons.forEach(button => button.addEventListener('click', () => calculate(button)))
-
-
-
-let result = eval('2+2.7198758');
-let resultStr = result.toString();
-console.log(resultStr.match(/./ig))
-if (resultStr.match(/./ig)){
-    result = result.toFixed(2)
-}
 
